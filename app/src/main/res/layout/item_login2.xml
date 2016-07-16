@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#0000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical"
+        android:background="@drawable/linearlayout_background"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="25sp"
+            android:text="登录"
+            android:gravity="center"/>
+
+        <EditText
+            android:background="@drawable/edit_background"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:text="byidsoffice"
+            android:singleLine="true"
+            android:id="@+id/et_username"/>
+
+
+        -<LinearLayout android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp">
+
+
+        -<RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:background="@drawable/edit_background"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:hint="请输入密码"
+            android:text="admin123"
+            android:singleLine="true"
+            android:id="@+id/et_password"
+            android:password="true"/>
+
+        <ImageView
+            android:onClick="login"
+            android:layout_height="30dp"
+            android:layout_width="30dp"
+            android:layout_marginRight="3dp"
+            android:id="@+id/iv_login"
+            android:src="@drawable/byids"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

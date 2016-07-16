@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_table_bakg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linear_air_group"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_temp"
+            android:text="24℃"
+            android:textColor="@color/colorText"
+            android:textSize="140sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_humidity"
+            android:text="湿度: 80%"
+            android:textColor="@color/colorText"
+            android:textSize="60sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/tv_pm"
+            android:text="PM2.5:70"
+            android:textColor="@color/colorText"
+            android:textSize="60sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear_data"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_date"
+            android:paddingRight="20dp"
+            android:text="2016.7.16"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_week"
+            android:text="星期三"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:text="15:32"
+            android:paddingRight="20dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@color/colorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_list"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:layout_margin="40dp"
+        android:layout_below="@id/linear_data"
+        android:layout_above="@id/scroll"
+        android:layout_width="500dp"
+        android:background="@drawable/background"
+        android:layout_height="744dp">
+
+        <ImageView
+            android:id="@+id/iv_up"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:onClick="upORDown"
+            android:src="@mipmap/push_up_icon"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:id="@+id/lv_model"
+            android:layout_weight="1"
+            android:scrollbars="none"
+            android:dividerHeight="22dp"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_down"
+            android:padding="10dp"
+            android:clickable="true"
+            android:onClick="upORDown"
+            android:src="@mipmap/push_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+    <com.github.glomadrian.dashedcircularprogress.DashedCircularProgress
+        android:id="@+id/size"
+        custom:external_color="@color/size_base"
+        custom:base_color="@color/size_base"
+        android:rotation="180"
+        custom:min="0"
+        custom:max="10"
+        custom:progress_color="@color/colorPrimary"
+        custom:duration="6000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_horizontal"
+        android:layout_width="400dp"
+        android:layout_height="430dp">
+
+        <Button
+            android:id="@+id/restart"
+            android:text=""
+            android:background="#00ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="400dp"
+            android:layout_height="400dp" />
+        <TextView
+            android:id="@+id/tv_water_number"
+            android:text="0℃"
+            android:rotation="180"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </com.github.glomadrian.dashedcircularprogress.DashedCircularProgress>
+
+    <RadioGroup
+        android:id="@+id/rg_rooms"
+        android:background="@mipmap/rooms_bak"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="125dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="900dp"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_keting"
+            android:text="客厅"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:textColor="@color/colorText"
+            android:checked="true"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:background="@color/colorText"
+            android:layout_width="1dp"
+            android:layout_height="54dp" />
+        <RadioButton
+            android:id="@+id/rb_woshi"
+            android:text="卧室"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:button="@null"
+            android:paddingRight="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:background="@color/colorText"
+            android:layout_width="1dp"
+            android:layout_height="54dp" />
+        <RadioButton
+            android:id="@+id/rb_ertongfang"
+            android:text="儿童房"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:textColor="@color/room_color"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+    <ImageView
+        android:id="@+id/logo"
+        android:src="@mipmap/meidi"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_screen"
+        android:text="休眠"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/colorText"
+        android:drawableTop="@mipmap/turn_on"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"
+        android:layout_toLeftOf="@id/logo"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

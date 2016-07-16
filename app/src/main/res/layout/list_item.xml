@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_item"
+    android:orientation="horizontal"
+    android:layout_margin="30dp"
+    android:padding="10dp"
+    android:gravity="center"
+    android:background="@drawable/listview_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_gravity="center"
+        android:src="@mipmap/eating_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:paddingLeft="30dp"
+        android:id="@+id/tv_model"
+        android:text="会客模式"
+        android:textColor="@color/colorText"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorDark">#000000</color>
+    <color name="colorText">#ffffff</color>
+    <color name="material_pink">#FF4081</color>
+    <color name="pager_base_color">#4cffffff</color>
+    <color name="simple_bg">#ff39065a</color>
+    <color name="white">#ffffff</color>
+    <color name="pager_bg">#212121</color>
+    <color name="size_bg">#ffdcd5d6</color>
+    <color name="size_external">#ffff001e</color>
+    <color name="size_base">#ff959595</color>
+    <color name="size_external_circle">#a3ff3443</color>
+    <color name="room_color">#8E8E8E</color>
+    <color name="color_table_bakg">#272727</color>
+</resources>

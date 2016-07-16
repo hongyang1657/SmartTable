@@ -107,9 +107,9 @@ public class LoginActivity extends Activity implements SurfaceHolder.Callback{
 
     private void initView(){
         //初始化surface 播放背景视频
-        surfaceView = (SurfaceView) findViewById(R.id.id_sf);
+        /*surfaceView = (SurfaceView) findViewById(R.id.id_sf);
         surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
+        surfaceHolder.addCallback(this);*/
 
         viewPager = (ViewPager) findViewById(R.id.id_vp);
         v1 = getLayoutInflater().inflate(R.layout.item_login1,null);
@@ -472,8 +472,6 @@ public class LoginActivity extends Activity implements SurfaceHolder.Callback{
     //解析房间数据
     private void doParseRooms(String mRoomAttr){
         //roomsList = new ArrayList<Rooms>();
-
-
 
 
         try {

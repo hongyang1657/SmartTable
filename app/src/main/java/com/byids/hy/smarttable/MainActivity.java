@@ -25,14 +25,28 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.byids.hy.smarttable.adapter.MyBaseAdapter;
 import com.byids.hy.smarttable.bean.TableModel;
+import com.byids.hy.smarttable.utils.AES;
+import com.byids.hy.smarttable.utils.ByteUtils;
+import com.byids.hy.smarttable.utils.CommandJsonUtils;
+import com.byids.hy.smarttable.utils.Encrypt;
+import com.byids.hy.smarttable.utils.VibratorUtil;
 import com.github.glomadrian.dashedcircularprogress.DashedCircularProgress;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +55,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private String TAG = "result";
     private int flag = 0;
+    private int screenFlag = 0;//判断屏幕是否开启
 
     private ListView listView;
     private MyBaseAdapter adapter;
@@ -51,14 +66,16 @@ public class MainActivity extends Activity {
     private TableModel tableModel;
     private List<TableModel> list;
     private List<TableModel> beforeList;
+    //房间模式和单品
     private String[] keTingModel = {"会客模式","影音模式","用餐模式","离开模式","     空调    "};
     private int[] ketTingImg = {R.mipmap.meet_friend_icon,R.mipmap.medium_icon,R.mipmap.eating_icon,R.mipmap.leave_icon,R.mipmap.aircondition_icon};
-    private String[] woShiModel = {"工作模式","安眠模式","音乐模式","阅读模式","离开模式"};
-    private String[] erTongFangModel = {"学习模式","午睡模式","娱乐模式","影音模式","离开模式"};
+    private String[] woShiModel = {"空气球","净化器","除湿器","电扇","加湿器"};
+    private int[] woShiImg = {R.mipmap.air_ball,R.mipmap.cleaner,R.mipmap.dehum,R.mipmap.fan,R.mipmap.hum,};
+    private String[] erTongFangModel = {"智能插座","智能路由","睡眠环","空调","加湿器"};
+    private int[] erTongFangImg = {R.mipmap.smart_jack,R.mipmap.smart_tplink,R.mipmap.sleep_cycle,R.mipmap.air_condition,R.mipmap.hum,};
     private final String KETING = "会客模式";
-    private final String WOSHI = "工作模式";
-    private final String ERTONGFANG = "学习模式";
-    private PopupWindow popupWindow;
+    private final String WOSHI = "空气球";
+    private final String ERTONGFANG = "智能插座";
 
     LinearLayout linearData1;
     LinearLayout linearData2;
@@ -77,6 +94,7 @@ public class MainActivity extends Activity {
     int waterTemp = 0;//水温
 
     //空调dialog控件
+    private SeekBar SbAirTemp;
     private ImageView ivClose;
     private CheckBox tvAirSwitch;
     private RadioGroup rgAir;
@@ -85,10 +103,12 @@ public class MainActivity extends Activity {
     private RadioButton tvAirHumi;
     private RadioButton tvAirHot;
     //加湿器dialog
+    private SeekBar SbHumiSpeed;
     private ImageView ivHumClose;
     private CheckBox tvHumSwitch;
     private CheckBox tvHumAuto;
     //净化器dialog控件
+    private SeekBar SbCleanerSpeed;
     private ImageView ivCleanerClose;
     private CheckBox cbCleanerSwitch;
     private RadioGroup rgCleaner;
@@ -102,6 +122,18 @@ public class MainActivity extends Activity {
 
     private Thread aThread;
     private Thread bThread;
+
+    //----------------socket---------------------
+    public static final int DEFAULT_PORT = 57816;
+    private TcpLongSocket tcplongSocket;
+
+    //---------------------------udp----------------------------
+    private byte[] buffer = new byte[MAX_DATA_PACKET_LENGTH];
+    private static final int MAX_DATA_PACKET_LENGTH = 100;
+    public static final String LOG_TAG = "WifiBroadcastActivity";
+    String udpCheck;
+    String ip;    //接收到的ip地址
+
 
     private Handler handler = new Handler(){
         @Override
@@ -188,11 +220,14 @@ public class MainActivity extends Activity {
         //设置当前窗体为全屏显示
         window.setFlags(flag, flag);
 
+        //隐藏虚拟按键
         WindowManager.LayoutParams params = window.getAttributes();
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
         window.setAttributes(params);
 
         setContentView(R.layout.activity_table);
+        test("hy123");          //udp
+
         initData();
         initView();
         getCurrentTime();
@@ -229,7 +264,7 @@ public class MainActivity extends Activity {
          ivLogo = (ImageView) findViewById(R.id.logo);
 
         tvScreen = (TextView) findViewById(R.id.tv_screen);
-        tvScreen.setOnClickListener(screenSwitch);
+        tvScreen.setOnClickListener(screenSwitch);//关闭屏幕，（隐藏所有控件）
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvWeek = (TextView) findViewById(R.id.tv_week);
         tvDate = (TextView) findViewById(R.id.tv_date);
@@ -253,6 +288,7 @@ public class MainActivity extends Activity {
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (flag==0){
                     animateUp();
                     changeWaterTempUp();
@@ -369,7 +405,6 @@ public class MainActivity extends Activity {
     AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //intentToDialog();   //跳转二级界面
             switch (list.get(0).getModelText()){
                 case KETING:
                     adapter.changeSelected(position);
@@ -393,20 +428,20 @@ public class MainActivity extends Activity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId){
                 case R.id.rb_keting:
-                        refreshData(keTingModel,ketTingImg,1);
-                        rb1.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    refreshData(keTingModel,ketTingImg,1);
+                    rb1.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                     rb2.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     rb3.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     break;
                 case R.id.rb_woshi:
-                        refreshData(woShiModel,ketTingImg,2);
-                        rb2.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    refreshData(woShiModel,ketTingImg,2);
+                    rb2.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                     rb1.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     rb3.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     break;
                 case R.id.rb_ertongfang:
-                        refreshData(erTongFangModel,ketTingImg,3);
-                        rb3.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    refreshData(erTongFangModel,ketTingImg,3);
+                    rb3.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                     rb1.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     rb2.setTextColor(MainActivity.this.getResources().getColor(R.color.room_color));
                     break;
@@ -454,17 +489,20 @@ public class MainActivity extends Activity {
     private void intentToCleanerDialog(){
         dialog3.show();
     }
-
+    //初始化dialog
     private void initDialog(){
         dialog1 = new Dialog(this,R.style.CustomDialog);
         View view1 = LayoutInflater.from(this).inflate(R.layout.custom_dialog_layout,null);
+        SbAirTemp = (SeekBar) view1.findViewById(R.id.sb_aircondition_temp);
         ivClose = (ImageView) view1.findViewById(R.id.iv_close);
-        tvAirSwitch = (CheckBox) view1.findViewById(R.id.iv_aircondition_turn);
+        tvAirSwitch = (CheckBox) view1.findViewById(R.id.iv_aircondition_turn);//空调开关
+        tvAirSwitch.setOnCheckedChangeListener(AirSwitchListener);
         rgAir = (RadioGroup) view1.findViewById(R.id.rg_air);
         tvAirCold = (RadioButton) view1.findViewById(R.id.iv_aircondition_cold);
         tvAirAuto = (RadioButton) view1.findViewById(R.id.iv_aircondition_auto);
         tvAirHumi = (RadioButton) view1.findViewById(R.id.iv_aircondition_humi);
         tvAirHot = (RadioButton) view1.findViewById(R.id.iv_aircondition_hot);
+        SbAirTemp.setOnSeekBarChangeListener(airTempListener);
         rgAir.setOnCheckedChangeListener(airChangeListener);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -476,7 +514,7 @@ public class MainActivity extends Activity {
         dialog1.setCanceledOnTouchOutside(true);//点击外部，弹框消失
         WindowManager.LayoutParams params = dialog1.getWindow().getAttributes();
         params.width = 1200;
-        params.height = 400;
+        params.height = 400;//改成400
         Window mWindow = dialog1.getWindow();
         mWindow.setGravity(Gravity.BOTTOM);
         mWindow.setAttributes(params);
@@ -484,9 +522,11 @@ public class MainActivity extends Activity {
 
         dialog2 = new Dialog(this,R.style.CustomDialog);
         View view = LayoutInflater.from(this).inflate(R.layout.humidifier_dialog_layout,null);
+        SbHumiSpeed = (SeekBar) view.findViewById(R.id.sb_humiditier);
         ivHumClose = (ImageView) view.findViewById(R.id.iv_hum_close);
         tvHumSwitch = (CheckBox) view.findViewById(R.id.tv_hum_switch);
         tvHumAuto = (CheckBox) view.findViewById(R.id.tv_hum_auto);
+        SbHumiSpeed.setOnSeekBarChangeListener(humiSpeedListener);
         tvHumSwitch.setOnCheckedChangeListener(humSwitchCheckedListener);
         tvHumAuto.setOnCheckedChangeListener(humAutoCheckedListener);
         ivHumClose.setOnClickListener(new View.OnClickListener() {
@@ -507,10 +547,12 @@ public class MainActivity extends Activity {
 
         dialog3 = new Dialog(this,R.style.CustomDialog);
         View view2 = LayoutInflater.from(this).inflate(R.layout.cleaner_dialog_layout,null);
-
+        SbCleanerSpeed = (SeekBar) view2.findViewById(R.id.sb_cleaner);
         ivCleanerClose = (ImageView) view2.findViewById(R.id.iv_cleaner_close);
         cbCleanerSwitch = (CheckBox) view2.findViewById(R.id.cb_switch);
         rgCleaner = (RadioGroup) view2.findViewById(R.id.rg_cleaner);
+        cbCleanerSwitch.setOnCheckedChangeListener(CleanerSwitchListener);
+        SbCleanerSpeed.setOnSeekBarChangeListener(cleanerSpeedListener);
         rgCleaner.setOnCheckedChangeListener(cleanerCheckListener);
         ivCleanerClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -531,7 +573,20 @@ public class MainActivity extends Activity {
 
 
     //---------------------------------各种控制-----------------------------
-    //空调控制
+    //空调控制   开关
+    CompoundButton.OnCheckedChangeListener AirSwitchListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked){
+                Log.i(TAG, "onCheckedChanged: 开关开了");
+                SbAirTemp.setProgress(0);
+            }else if (!isChecked){
+                Log.i(TAG, "onCheckedChanged: 开关关了");
+                SbAirTemp.setClickable(false);
+            }
+        }
+    };
+    //空调  模式控制
     RadioGroup.OnCheckedChangeListener airChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -567,7 +622,20 @@ public class MainActivity extends Activity {
         }
     };
 
-    //净化器控制
+    //净化器  开关
+    CompoundButton.OnCheckedChangeListener CleanerSwitchListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked){
+                Log.i(TAG, "onCheckedChanged:kai");
+            }else if (!isChecked){
+                Log.i(TAG, "onCheckedChanged:guan");
+                SbCleanerSpeed.setProgress(10);
+            }
+        }
+    };
+
+    //净化器模式
     RadioGroup.OnCheckedChangeListener cleanerCheckListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -611,12 +679,12 @@ public class MainActivity extends Activity {
                 break;
             case R.id.iv_down:
                 listView.setSmoothScrollbarEnabled(true);
-                listView.smoothScrollToPositionFromTop(9,2,1000);
+                listView.smoothScrollToPositionFromTop(20,2,1000);
                 break;
         }
     }
 
-    int screenFlag = -1;
+    //点击休眠按钮，屏幕的其他控件都隐藏
     View.OnClickListener screenSwitch = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -629,6 +697,7 @@ public class MainActivity extends Activity {
                 linearData2.setVisibility(View.INVISIBLE);
                 linearlist.setVisibility(View.INVISIBLE);
                 screenFlag = 1;
+                tvScreen.setText("唤醒");
             }else if (screenFlag==1){
                 ivLogo.setVisibility(View.VISIBLE);
                 radioGroup.setVisibility(View.VISIBLE);
@@ -637,7 +706,217 @@ public class MainActivity extends Activity {
                 linearData2.setVisibility(View.VISIBLE);
                 linearlist.setVisibility(View.VISIBLE);
                 screenFlag = 0;
+                tvScreen.setText("休眠");
             }
         }
     };
+
+    //------------------------------空调温度调节滑块------------------------------
+    SeekBar.OnSeekBarChangeListener airTempListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Log.i(TAG, "onProgressChanged: "+progress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+    //-------------------------加湿器风速调节滑块------------------------------
+    SeekBar.OnSeekBarChangeListener humiSpeedListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Log.i(TAG, "onProgressChanged: "+progress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+    //----------------------净化器风速调节滑块------------------------
+    SeekBar.OnSeekBarChangeListener cleanerSpeedListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Log.i(TAG, "onProgressChanged: "+progress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+
+
+
+    //测试  包装发送udp
+    public void test(String hid){
+
+        String udpJson="{\"command\":\"find\",\"data\":{\"hid\":\""+hid+"\",\"loginName\":\"byids\"}}";
+        Log.i(TAG, "test: ------------------"+udpJson);
+        byte[] enByte = AES.encrpt(udpJson);//加密
+        if (enByte == null)
+            return;
+        byte[] lengthByte = ByteUtils.intToByteBigEndian(enByte.length);
+        byte[] headByte = new byte[8];
+        for (int i = 0;i<headByte.length;i++) {
+            headByte[i] = 0x50;
+        }
+        byte[] tailByte = new byte[4];
+        tailByte[0] = 0x0d;
+        tailByte[1] = 0x0a;
+        tailByte[2] = 0x0d;
+        tailByte[3] = 0x0a;
+
+        byte[] sendByte = ByteUtils.byteJoin(headByte,lengthByte,enByte,tailByte);
+        AES.byteStringLog(sendByte);
+        //发送udp广播
+        new BroadCastUdp(sendByte).start();
+    }
+
+    //发送UDP
+    public class BroadCastUdp extends Thread {
+        DatagramPacket dataPacket = null;
+        DatagramPacket receiveData= null;
+        private byte[] dataByte;
+        private DatagramSocket udpSocket;
+        public BroadCastUdp(byte[] sendByte) {
+            this.dataByte = sendByte;
+        }
+        public void run() {
+            try {
+                //udpSocket = new DatagramSocket(DEFAULT_PORT);
+                if (udpSocket==null){
+                    udpSocket = new DatagramSocket(null);
+                    udpSocket.setReuseAddress(true);
+                    udpSocket.bind(new InetSocketAddress(DEFAULT_PORT));
+                }
+                dataPacket = new DatagramPacket(buffer, MAX_DATA_PACKET_LENGTH);
+                receiveData= new DatagramPacket(buffer,MAX_DATA_PACKET_LENGTH);
+                if (this.dataByte == null){
+                    return;
+                }
+                byte[] data = this.dataByte;
+                dataPacket.setData(data);
+                dataPacket.setLength(data.length);
+                dataPacket.setPort(DEFAULT_PORT);
+
+                InetAddress broadcastAddr;
+                broadcastAddr = InetAddress.getByName("255.255.255.255");
+                dataPacket.setAddress(broadcastAddr);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.toString());
+                udpSocket.close();
+            }
+            // while( start ){
+            try {
+                udpSocket.send(dataPacket);
+                sleep(10);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.toString());
+                udpSocket.close();
+            }
+            try {
+                udpSocket.receive(receiveData);
+                udpSocket.receive(receiveData);
+            } catch (Exception e) {
+
+                Log.e(LOG_TAG, e.toString());
+                udpSocket.close();
+            }
+            if (null!=receiveData){
+
+                if( 0!=receiveData.getLength() ) {
+                    String codeString = new String( buffer, 0, receiveData.getLength() );
+
+                    Log.i("result", "接收到数据为codeString: "+codeString);
+                    Log.i("result", "接收到数据为: "+codeString.substring(2,4));
+                    udpCheck=codeString.substring(2,4);
+                    Log.i("result", "接收到数据为: "+udpCheck);
+                    Log.i("result","recivedataIP地址为："+receiveData.getAddress().toString().substring(1));//此为IP地址
+                    Log.i("result","recivedata_sock地址为："+receiveData.getAddress());//此为IP加端口号
+
+                    /*
+                    7.4    连接udp，
+                     */
+                    ip = receiveData.getAddress().toString().substring(1);   //ip地址
+                }
+            }else{
+                try {
+                    udpSocket.send(dataPacket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            udpSocket.close();
+        }
+
+    }
+
+    public void connectTCP(){
+        tcplongSocket=new TcpLongSocket(new ConnectTcp());
+        tcplongSocket.startConnect(ip,DEFAULT_PORT);
+        Log.i(TAG, "connectTCP: "+ip);
+    }
+
+    private class ConnectTcp implements TCPLongSocketCallback {
+
+
+        @Override
+        public void connected() {
+            Log.i("MAIN", String.valueOf(tcplongSocket.getConnectStatus()));
+            VibratorUtil.Vibrate(MainActivity.this,300);
+            JSONObject checkCommandData=new JSONObject();
+            try {
+                checkCommandData.put("kong","keys");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String  checkJson = CommandJsonUtils.getCommandJson(1,checkCommandData,"hy123","uname","pwd", String.valueOf(System.currentTimeMillis()));
+            Log.i("result","check"+checkJson);
+            tcplongSocket.writeDate(Encrypt.encrypt(checkJson));
+
+        }
+
+        @Override
+        public void receive(byte[] buffer) {
+            Log.i("收到数据","--------");
+            if("Hello client"==buffer.toString()){
+                Log.i("心跳", "心跳"+String.valueOf(tcplongSocket.getConnectStatus()));
+            }
+
+        }
+
+        @Override
+        public void disconnect() {
+            tcplongSocket.close();
+        }
+    }
+
+    public void logoClick(View v){
+        switch (v.getId()){
+            case R.id.logo:
+                connectTCP();           //TCP
+                break;
+        }
+    }
 }

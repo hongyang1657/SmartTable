@@ -212,6 +212,8 @@
     </RadioGroup>
     <ImageView
         android:id="@+id/logo"
+        android:onClick="logoClick"
+        android:clickable="true"
         android:src="@mipmap/meidi"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -222,11 +224,11 @@
         android:id="@+id/tv_screen"
         android:text="休眠"
         android:gravity="center"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="@color/colorText"
         android:drawableTop="@mipmap/turn_on"
         android:layout_alignParentBottom="true"
-        android:layout_margin="50dp"
+        android:layout_marginRight="40dp"
         android:layout_toLeftOf="@id/logo"
         android:clickable="true"
         android:layout_width="wrap_content"

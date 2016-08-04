@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.byids.hy.smarttable.MainActivity;
 import com.byids.hy.smarttable.R;
 import com.byids.hy.smarttable.bean.ItemFlag;
 import com.byids.hy.smarttable.bean.TableModel;
@@ -34,21 +35,17 @@ public class MyBaseAdapter extends BaseAdapter{
         inflater = LayoutInflater.from(context);
     }
 
-    public void changeSelected(int positon){ //刷新方法
+    int SaveRoom = 1;
+    public void changeSelected(int positon,int roomIndex){ //刷新方法
         if(positon != mSelect){
             mSelect = positon;
+            SaveRoom = roomIndex;//
+            Log.i("result", "changeSelected: ---------------as"+SaveRoom);
             notifyDataSetChanged();
         }
     }
 
-    public void changeRooms(){
-        if (mSelect!=-1){
-            save = mSelect;
-            mSelect = -1;
-            notifyDataSetChanged();
-            Log.i("result", "changeRooms: --------"+mlist.get(0).getRoom()+"房间？"+save+"条");
-        }
-    }
+
 
     @Override
     public int getCount() {
@@ -79,11 +76,30 @@ public class MyBaseAdapter extends BaseAdapter{
         viewHolder = (ViewHolder) convertView.getTag();
         viewHolder.textView.setText(mlist.get(position).getModelText());
         viewHolder.imageView.setImageResource(mlist.get(position).getModelImg());
-        if(mSelect==position){
-            convertView.setBackgroundResource(R.drawable.model_bak2);  //选中项背景
-        }else{
-            convertView.setBackgroundResource(R.drawable.model_bak);  //其他项背景
+
+        int Keting = position+10;
+        int Woshi = position+20;
+        int Ertongfang = position+30;
+        if (mlist.get(position).getRoom()=="keting"){
+            if(mSelect==Keting){
+                convertView.setBackgroundResource(R.drawable.model_bak2);  //选中项背景
+            }else{
+                convertView.setBackgroundResource(R.drawable.model_bak);  //其他项背景
+            }
+        }else if (mlist.get(position).getRoom()=="woshi"){
+            if(mSelect==Woshi){
+                convertView.setBackgroundResource(R.drawable.model_bak2);  //选中项背景
+            }else{
+                convertView.setBackgroundResource(R.drawable.model_bak);  //其他项背景
+            }
+        }else if (mlist.get(position).getRoom()=="ertongfang"){
+            if(mSelect==Ertongfang){
+                convertView.setBackgroundResource(R.drawable.model_bak2);  //选中项背景
+            }else{
+                convertView.setBackgroundResource(R.drawable.model_bak);  //其他项背景
+            }
         }
+
         return convertView;
     }
 

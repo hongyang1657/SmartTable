@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#00000000"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingTop="50dp"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_menu_img"
+            android:src="@drawable/yu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_menu_title"
+            android:text="剁椒鱼头"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:paddingLeft="10dp"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/bt_menu1"
+            android:layout_gravity="center"
+            android:text="湘菜"
+            android:textSize="18sp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/menu_bac_shape"
+            android:padding="10dp"
+            android:textColor="@color/colorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/bt_menu2"
+            android:layout_gravity="center"
+            android:text="煮"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/menu_bac_shape"
+            android:padding="10dp"
+            android:textColor="@color/colorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_menu_content"
+        android:text="         这道菜也常被人称为“鸿运当头”或“开门红”。是一道有名的湘菜，将鲜美的鱼头和红辣的剁辣椒融为一体，风味独具一格。菜品色泽红亮、味浓、肉质细嫩、鲜辣适口。是既然有味又有好寓意的一道菜，做法也不难，很推荐大家在家制作。"
+        android:textColor="@color/colorText"
+        android:textSize="20sp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_menu_tips1"
+        android:text="主料:鲢鱼头"
+        android:textColor="@color/colorText"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_menu_tips2"
+        android:text="辅料：鱼头1个（胖头鱼的最好），剁辣椒适量，姜1小块，大葱适量，蒜适量，香葱适量"
+        android:textColor="@color/colorText"
+        android:textSize="20sp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

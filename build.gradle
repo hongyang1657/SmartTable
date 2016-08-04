@@ -1,8 +1,82 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    defaultConfig {
+        applicationId "com.midea.slkdemo"
+        minSdkVersion 18
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    productFlavors {
+        develop {
+        }
+        production {
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = ['jni']
+            jniLibs.srcDirs = ['jniLibs']
+        }
+
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+}
 buildscript {
     repositories {
-        jcenter()
+        //jcenter()           //
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+allprojects {
+    repositories {
+        //jcenter()        //
+    }
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        //jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.0.0'
@@ -11,13 +85,15 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
     }
 }
-
-task clean(type: Delete) {
+/*task clean(type: Delete) {
     delete rootProject.buildDir
+}*/
+dependencies {
+    compile files('gradle/wrapper/gradle-wrapper.jar')
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }

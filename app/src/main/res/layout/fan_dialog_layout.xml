@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_fan_title"
+            android:text="电扇"
+            android:textSize="30sp"
+            android:textColor="@color/colorText"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_fan_close"
+            android:padding="20dp"
+            android:src="@mipmap/close"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <TextView
+            android:id="@+id/iv_fan"
+            android:gravity="center"
+            android:text="风速"
+            android:layout_weight="1"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_weight="4"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        <SeekBar
+            android:id="@+id/sb_fan"
+            android:focusable="true"
+            android:visibility="gone"
+            android:thumb="@drawable/thumb"
+            android:maxHeight="4dp"
+            android:minHeight="2dp"
+            android:progressDrawable="@color/room_color"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+            <com.byids.hy.smarttable.view.MySeekbar
+                android:id="@+id/my_seekbar_fan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:thumb="@drawable/thumb"
+                android:maxHeight="4dp"
+                android:minHeight="2dp"
+                android:progressDrawable="@color/pager_bg" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_fan_value"
+            android:text=""
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:weightSum="5"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/cb_fan_switch"
+            android:gravity="center"
+            android:text="开关"
+            android:textColor="@color/room_color"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selecter_switch"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:id="@+id/rg_fan"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/rb_normal"
+                android:gravity="center"
+                android:text="正常风"
+                android:textColor="@color/room_color"
+                android:textSize="25sp"
+                android:drawableTop="@drawable/selecter_normal_fan"
+                android:drawablePadding="10dp"
+                android:button="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/rb_mute"
+                android:text="静音风"
+                android:textColor="@color/room_color"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:drawableTop="@drawable/selecter_mute_fan"
+                android:drawablePadding="10dp"
+                android:button="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/rb_comfort"
+                android:text="舒适风"
+                android:textColor="@color/room_color"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:drawableTop="@drawable/selecter_comfort_fan"
+                android:drawablePadding="10dp"
+                android:button="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/rb_sleep_fan"
+                android:text="睡眠风"
+                android:textColor="@color/room_color"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:button="@null"
+                android:drawableTop="@drawable/selecter_sleep_fan"
+                android:drawablePadding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+    </LinearLayout>
+</LinearLayout>

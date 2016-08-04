@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#00000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingTop="50dp"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_news_img"
+            android:src="@drawable/kongtiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_news_title"
+            android:text="美的Clivet达成战略合作"
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_news_content"
+        android:text="         美的集团股份有限公司（深圳证券交易所代码：000333，“美的”）于2016年6月21日签署协议，收购Clivet S.p.A. 80%的股权，Clivet Espana S.A.以及相关的土地及厂房。Bellò家族作为Clivet S.p.A 的现有股东，将保留20%的股权。通过此次战略合作，美的将进一步提升其在欧洲市场的占有率。借助双方互补性的资源和优势，两家公司将共同探索未来发展机遇。该项交易需经相关国家及地区的常规性反垄断审核，预计在年底前完成交割。"
+        android:textColor="@color/colorText"
+        android:textSize="20sp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

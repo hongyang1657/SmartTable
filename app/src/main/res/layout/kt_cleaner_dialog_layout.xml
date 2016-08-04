@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_cleaner_title_kt"
+            android:text="净化器"
+            android:textSize="30sp"
+            android:textColor="@color/colorText"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_cleaner_close_kt"
+            android:padding="20dp"
+            android:src="@mipmap/close"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="240dp">
+    <CheckBox
+        android:layout_weight="2"
+        android:id="@+id/tv_cleaner_switch_kt"
+        android:gravity="center"
+        android:text="开关"
+        android:button="@null"
+        android:textColor="@color/room_color"
+        android:textSize="25sp"
+        android:clickable="true"
+        android:drawableTop="@drawable/selecter_switch"
+        android:drawablePadding="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <CheckBox
+        android:layout_weight="2"
+        android:id="@+id/tv_cleaner_auto_kt"
+        android:checked="false"
+        android:gravity="center"
+        android:text="自动"
+        android:button="@null"
+        android:textColor="@color/room_color"
+        android:textSize="25sp"
+        android:clickable="true"
+        android:drawableTop="@drawable/selecter_auto"
+        android:drawablePadding="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="1"
+            android:text="风速"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_weight="6"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        <SeekBar
+            android:id="@+id/sb_cleaner_kt"
+            android:focusable="true"
+            android:thumb="@drawable/thumb"
+            android:maxHeight="4dp"
+            android:minHeight="2dp"
+            android:visibility="gone"
+            android:progressDrawable="@color/room_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <com.byids.hy.smarttable.view.MySeekbar
+                android:id="@+id/my_seekbar_cleaner_kt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:thumb="@drawable/thumb"
+                android:maxHeight="4dp"
+                android:minHeight="2dp"
+                android:progressDrawable="@color/pager_bg" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_cleaner_speed_kt"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="25sp"
+            android:textColor="@color/colorText"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

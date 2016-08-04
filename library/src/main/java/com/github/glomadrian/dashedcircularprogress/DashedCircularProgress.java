@@ -118,7 +118,7 @@ public class DashedCircularProgress extends RelativeLayout {
         duration = attributes.getInt(R.styleable.DashedCircularProgress_duration, duration);
         image = BitmapFactory.decodeResource(getResources(), attributes
                 .getResourceId(R.styleable.DashedCircularProgress_progress_icon,
-                        R.drawable.android));
+                        R.drawable.hehe));
         progressStrokeWidth = attributes.getInt(R.styleable.DashedCircularProgress_progress_stroke_width,
             progressStrokeWidth);
     }
@@ -129,7 +129,7 @@ public class DashedCircularProgress extends RelativeLayout {
         progressPainter.onSizeChanged(h, w);
         externalCirclePainter.onSizeChanged(h, w);
         internalCirclePainter.onSizeChanged(h, w);
-        iconPainter.onSizeChanged(h, w);
+        //iconPainter.onSizeChanged(h, w);
         animateValue();
     }
 
@@ -137,7 +137,7 @@ public class DashedCircularProgress extends RelativeLayout {
         progressPainter = new ProgressPainterImp(progressColor, min, max, progressStrokeWidth);
         externalCirclePainter = new ExternalCirclePainterImp(externalColor);
         internalCirclePainter = new InternalCirclePainterImp(internalBaseColor);
-        iconPainter = new IconPainter(image);
+        //iconPainter = new IconPainter(image);
     }
 
     private void initValueAnimator() {
@@ -152,7 +152,7 @@ public class DashedCircularProgress extends RelativeLayout {
         externalCirclePainter.draw(canvas);
         internalCirclePainter.draw(canvas);
         progressPainter.draw(canvas);
-        iconPainter.draw(canvas);
+        //iconPainter.draw(canvas);
         invalidate();
     }
 

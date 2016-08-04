@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:text="窗帘"
+            android:textSize="30sp"
+            android:textColor="@color/colorText"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_curtain_close"
+            android:padding="20dp"
+            android:clickable="true"
+            android:src="@mipmap/close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/rb_curtain_main"
+            android:gravity="center"
+            android:text="窗帘"
+            android:textColor="@color/room_color"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selector_curtain"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/rb_curtain_second"
+            android:text="纱帘"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selector_second_curtain"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/rb_curtain_open"
+            android:text="全开"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selector_all_curtain"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/rb_curtain_stop"
+            android:text="暂停"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:button="@null"
+            android:drawableTop="@drawable/selector_curtain_stop"
+            android:drawablePadding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

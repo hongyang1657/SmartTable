@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:background="@color/color_table_bakg"
+    android:id="@+id/relate_main"
+    android:background="@drawable/main_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_main_back"
+        android:src="@color/colorAlphaBlack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/linear_air_group"
@@ -17,27 +24,29 @@
             android:id="@+id/tv_temp"
             android:text="24℃"
             android:textColor="@color/colorText"
-            android:textSize="140sp"
+            android:textSize="120sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:gravity="center"
             android:id="@+id/tv_humidity"
-            android:text="湿度: 80%"
+            android:text="湿  度：80%"
             android:textColor="@color/colorText"
-            android:textSize="60sp"
+            android:textSize="50sp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
         <TextView
             android:layout_weight="1"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:id="@+id/tv_pm"
-            android:text="PM2.5:70"
+            android:text="PM2.5:70μg/m³"
             android:textColor="@color/colorText"
-            android:textSize="60sp"
+            android:textSize="50sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linear_data"
         android:layout_alignParentRight="true"
@@ -82,8 +91,7 @@
         android:orientation="vertical"
         android:layout_margin="40dp"
         android:layout_below="@id/linear_data"
-        android:layout_above="@id/scroll"
-        android:layout_width="500dp"
+        android:layout_width="400dp"
         android:background="@drawable/background"
         android:layout_height="744dp">
 
@@ -117,50 +125,79 @@
     </LinearLayout>
 
 
-
-    <com.github.glomadrian.dashedcircularprogress.DashedCircularProgress
-        android:id="@+id/size"
-        custom:external_color="@color/size_base"
-        custom:base_color="@color/size_base"
-        android:rotation="180"
-        custom:min="0"
-        custom:max="10"
-        custom:progress_color="@color/colorPrimary"
-        custom:duration="6000"
+    <RelativeLayout
+        android:id="@+id/relate_cycle"
+        android:layout_margin="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:gravity="center_horizontal"
-        android:layout_width="400dp"
-        android:layout_height="430dp">
+        android:layout_width="200dp"
+        android:layout_height="200dp">
 
-        <Button
-            android:id="@+id/restart"
-            android:text=""
-            android:background="#00ffffff"
-            android:layout_centerInParent="true"
-            android:layout_width="400dp"
-            android:layout_height="400dp" />
         <TextView
             android:id="@+id/tv_water_number"
             android:text="0℃"
-            android:rotation="180"
             android:layout_alignParentTop="true"
             android:textColor="@color/colorText"
+            android:visibility="invisible"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_cycle_temp"
+            android:src="@drawable/cycle_big"
+            android:visibility="invisible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+        <ImageView
+            android:id="@+id/iv_click_cycle"
+            android:onClick="toCycle"
+            android:src="@color/colorAlpha"
+            android:layout_alignBottom="@id/iv_cycle_temp"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+        <ImageView
+            android:id="@+id/iv_zhizhen_temp"
+            android:src="@drawable/zhizhen"
+            android:visibility="invisible"
+            android:layout_alignTop="@id/iv_cycle_temp"
+            android:layout_margin="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/iv_huagan_temp"
+            android:src="@drawable/huagan"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@id/iv_cycle_temp"
+            android:layout_alignRight="@id/iv_cycle_temp"
+            android:padding="20dp"
+            android:layout_width="200dp"
+            android:layout_height="100dp" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_click_cycle_show"
+        android:clickable="true"
+        android:src="@mipmap/meet_friend_icon"
+        android:padding="20dp"
+        android:layout_alignBottom="@id/relate_cycle"
+        android:layout_toRightOf="@id/relate_cycle"
+        android:layout_marginLeft="-40dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
-    </com.github.glomadrian.dashedcircularprogress.DashedCircularProgress>
+
+
 
     <RadioGroup
         android:id="@+id/rg_rooms"
         android:background="@mipmap/rooms_bak"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_toRightOf="@id/size"
+        android:layout_toRightOf="@id/relate_cycle"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="125dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="900dp"
         android:layout_height="wrap_content">
 
@@ -210,6 +247,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RadioGroup>
+
     <ImageView
         android:id="@+id/logo"
         android:onClick="logoClick"
@@ -220,17 +258,209 @@
         android:layout_margin="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_screen"
-        android:text="休眠"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/colorText"
-        android:drawableTop="@mipmap/turn_on"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="40dp"
-        android:layout_toLeftOf="@id/logo"
-        android:clickable="true"
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_weather"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/beijing"
+        android:layout_toRightOf="@id/linear_air_group"
+        android:layout_toLeftOf="@id/linear_list"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="245dp">
+    </android.support.v4.view.ViewPager>
+    <GridLayout
+        android:id="@+id/grid_weather"
+        android:orientation="horizontal"
+        android:rowCount="2"
+        android:paddingLeft="30dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="30dp"
+        android:layout_alignLeft="@id/viewpager_weather"
+        android:layout_alignBottom="@id/viewpager_weather"
+        android:columnCount="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_icon1"
+            android:layout_margin="6dp"
+            android:text="六月二十九"
+            android:textColor="@color/colorText"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh1"
+            android:drawablePadding="-8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon2"
+            android:layout_margin="6dp"
+            android:text="保湿保润"
+            android:drawablePadding="-8dp"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:drawableTop="@mipmap/wh2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon3"
+            android:text="宜开窗"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon4"
+            android:text="易感冒"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </GridLayout>
+    <GridLayout
+        android:id="@+id/grid_close"
+        android:orientation="horizontal"
+        android:rowCount="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp"
+        android:layout_alignRight="@id/viewpager_weather"
+        android:layout_alignBottom="@id/viewpager_weather"
+        android:columnCount="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_icon5"
+            android:text="轻毛毯"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon6"
+            android:text="早睡早起"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon7"
+            android:text="易脱毛"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:textColor="@color/colorText"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_icon8"
+            android:text="T恤"
+            android:drawablePadding="-8dp"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            android:drawableTop="@mipmap/wh8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </GridLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_weather"
+        android:orientation="horizontal"
+        android:layout_alignBottom="@id/viewpager_weather"
+        android:layout_alignLeft="@id/viewpager_weather"
+        android:layout_alignRight="@id/viewpager_weather"
+        android:paddingLeft="12dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_1"
+            android:paddingRight="15dp"
+            android:button="@null"
+            android:drawableLeft="@drawable/selecter_cycle"
+            android:checked="true"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/rb_2"
+            android:paddingRight="15dp"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/selecter_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/rb_3"
+            android:paddingRight="15dp"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/selecter_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/line_news_and_menu"
+        android:layout_below="@id/viewpager_weather"
+        android:layout_toRightOf="@id/linear_air_group"
+        android:layout_toLeftOf="@id/linear_list"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_above="@id/rg_rooms"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_news"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/news_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </android.support.v4.view.ViewPager>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_menu"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/menu_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
 </RelativeLayout>

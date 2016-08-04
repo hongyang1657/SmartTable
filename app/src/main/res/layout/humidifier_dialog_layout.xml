@@ -34,51 +34,75 @@
         android:layout_width="match_parent"
         android:layout_height="240dp">
     <CheckBox
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:id="@+id/tv_hum_switch"
         android:gravity="center"
         android:text="开关"
         android:button="@null"
-        android:textColor="@color/colorText"
+        android:textColor="@color/room_color"
         android:textSize="25sp"
         android:clickable="true"
         android:drawableTop="@drawable/selecter_switch"
         android:drawablePadding="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content" />
     <CheckBox
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:id="@+id/tv_hum_auto"
         android:gravity="center"
         android:text="自动"
         android:button="@null"
-        android:textColor="@color/colorText"
+        android:textColor="@color/room_color"
         android:textSize="25sp"
         android:clickable="true"
         android:drawableTop="@drawable/selecter_auto"
         android:drawablePadding="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content" />
         <TextView
             android:layout_weight="1"
             android:text="风速"
-            android:paddingLeft="30dp"
+            android:gravity="center"
             android:textColor="@color/colorText"
             android:textSize="25sp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_weight="6"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
         <SeekBar
-            android:layout_weight="29"
             android:id="@+id/sb_humiditier"
             android:focusable="true"
             android:thumb="@drawable/thumb"
             android:maxHeight="4dp"
             android:minHeight="2dp"
+            android:visibility="gone"
             android:progressDrawable="@color/room_color"
-            android:layout_marginRight="50dp"
-            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <com.byids.hy.smarttable.view.MySeekbar
+                android:id="@+id/my_seekbar_humi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:thumb="@drawable/thumb"
+                android:maxHeight="4dp"
+                android:minHeight="2dp"
+                android:progressDrawable="@color/pager_bg" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_fun_speed"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="25sp"
+            android:textColor="@color/colorText"
             android:paddingRight="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

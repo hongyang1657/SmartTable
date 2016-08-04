@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:text="空调"
+            android:textSize="30sp"
+            android:textColor="@color/colorText"
+            android:padding="20dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_close_rtf"
+            android:padding="20dp"
+            android:clickable="true"
+            android:src="@mipmap/close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <TextView
+            android:id="@+id/iv_aircondition"
+            android:gravity="center"
+            android:text="温度"
+            android:layout_weight="1"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_weight="4"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        <SeekBar
+            android:id="@+id/sb_aircondition_temp_rtf"
+            android:focusable="true"
+            android:thumb="@drawable/thumb"
+            android:maxHeight="4dp"
+            android:minHeight="2dp"
+            android:visibility="gone"
+            android:progressDrawable="@color/room_color"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <com.byids.hy.smarttable.view.MySeekbar
+                android:id="@+id/my_seekbar_air_rtf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:thumb="@drawable/thumb"
+                android:maxHeight="4dp"
+                android:minHeight="2dp"
+                android:progressDrawable="@color/pager_bg" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_airtemp_value_rtf"
+            android:text=""
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_weight="1"
+            android:id="@+id/iv_aircondition_turn_rtf"
+            android:gravity="center"
+            android:text="开关"
+            android:textColor="@color/room_color"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selecter_switch"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:id="@+id/rg_air_rtf"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_weight="1"
+            android:clickable="false"
+            android:id="@+id/iv_aircondition_cold_rtf"
+            android:gravity="center"
+            android:text="制冷"
+            android:textColor="@color/room_color"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selecter_cold"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:layout_weight="1"
+            android:clickable="false"
+            android:id="@+id/iv_aircondition_auto_rtf"
+            android:text="自动"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selecter_auto"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:layout_weight="1"
+            android:clickable="false"
+            android:id="@+id/iv_aircondition_humi_rtf"
+            android:text="抽湿"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:drawableTop="@drawable/selecter_hum"
+            android:drawablePadding="10dp"
+            android:button="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:layout_weight="1"
+            android:clickable="false"
+            android:id="@+id/iv_aircondition_hot_rtf"
+            android:text="制热"
+            android:textColor="@color/room_color"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:button="@null"
+            android:drawableTop="@drawable/selecter_hot"
+            android:drawablePadding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

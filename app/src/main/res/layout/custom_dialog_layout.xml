@@ -42,22 +42,47 @@
             android:layout_weight="1"
             android:textColor="@color/colorText"
             android:textSize="25sp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
-        <SeekBar
+        <RelativeLayout
             android:layout_weight="4"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        <SeekBar
             android:id="@+id/sb_aircondition_temp"
             android:focusable="true"
             android:thumb="@drawable/thumb"
             android:maxHeight="4dp"
             android:minHeight="2dp"
+            android:visibility="gone"
             android:progressDrawable="@color/room_color"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginRight="50dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+            <com.byids.hy.smarttable.view.MySeekbar
+                android:id="@+id/my_seekbar_air"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:thumb="@drawable/thumb"
+                android:maxHeight="4dp"
+                android:minHeight="2dp"
+                android:progressDrawable="@color/pager_bg" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_airtemp_value"
+            android:text=""
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
     <LinearLayout
@@ -88,6 +113,7 @@
 
         <RadioButton
             android:layout_weight="1"
+            android:clickable="false"
             android:id="@+id/iv_aircondition_cold"
             android:gravity="center"
             android:text="制冷"
@@ -100,6 +126,7 @@
             android:layout_height="wrap_content" />
         <RadioButton
             android:layout_weight="1"
+            android:clickable="false"
             android:id="@+id/iv_aircondition_auto"
             android:text="自动"
             android:textColor="@color/room_color"
@@ -112,6 +139,7 @@
             android:layout_height="wrap_content" />
         <RadioButton
             android:layout_weight="1"
+            android:clickable="false"
             android:id="@+id/iv_aircondition_humi"
             android:text="抽湿"
             android:textColor="@color/room_color"
@@ -123,8 +151,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <RadioButton
-            android:background="@color/colorDark"
             android:layout_weight="1"
+            android:clickable="false"
             android:id="@+id/iv_aircondition_hot"
             android:text="制热"
             android:textColor="@color/room_color"
